@@ -2,14 +2,19 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 import psycopg2
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 conexao = psycopg2.connect(
-    host="localhost",
-    database="postgres",
-    user="postgres",
-    password="senha123",
-    port="5432"
+    host= os.getenv("HOST"),
+    database= os.getenv("DATABASE"),
+    user= os.getenv("USER"),
+    password= os.getenv("PASSWORD"),
+    port= os.getenv("PORT")
 )
+
 
 cursor = conexao.cursor()
 
