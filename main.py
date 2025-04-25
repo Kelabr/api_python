@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 import psycopg2
 
@@ -42,6 +43,16 @@ def read_all_users():
     resultado_json = [dict(zip(colunas, linha)) for linha in resultado] #Transformas a lista de tuplas (fornecidas pela variavel  resultado) em uma lista de dicionários
     return JSONResponse(content=resultado_json) #Retorna um json
 
+class Usuario(BaseModel):
+    nome:str
+    email:str
+    matricula:str
+
+@app.post("/usuario")
+def create_user(usuarios:Usuario):
+    cursor.execute("INSERT INTO users (name, email, matricula) VALUES(%s, %s, %s)", (usuarios.nome, usuarios.email, usuarios.matricula,))
+    conexao.commit()
+    return {"menssage":"Usuário criado"}
 
 
 
