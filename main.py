@@ -33,6 +33,8 @@ def read_user(usuario_id: int):
 
     # return {"Usuário Id": usuario_id}
 
+    
+
 @app.get("/usuarios")
 def read_all_users():
     cursor.execute("SELECT * FROM users")
@@ -42,6 +44,8 @@ def read_all_users():
 
     resultado_json = [dict(zip(colunas, linha)) for linha in resultado] #Transformas a lista de tuplas (fornecidas pela variavel  resultado) em uma lista de dicionários
     return JSONResponse(content=resultado_json) #Retorna um json
+
+
 
 class Usuario(BaseModel):
     nome:str
